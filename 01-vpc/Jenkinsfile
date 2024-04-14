@@ -23,13 +23,19 @@ pipeline {
                 '''
             }
         }
-        // stage('APPLY') {
-        //     steps {
-        //         sh '''
-        //             terraform apply -auto-approve
-        //         '''
-        //     }
-        // }
+        stage('approve') {
+            steps {
+                    input "shall I Apply?"
+            }
+        }
+        stage('APPLY') {
+            steps {
+                sh '''
+                    cd 01-vpc
+                    terraform apply -auto-approve
+                '''
+            }
+        }
     }
     post { 
         always { 
